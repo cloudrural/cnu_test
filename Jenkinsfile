@@ -1,8 +1,10 @@
 pipeline {
     agent any
     environment {
+      WORKSPACE = pwd()
       GIT_USER_NAME = "Bharath Pantala"
       GIT_USER_MAIL = "bpantala@gmail.com"
+      PATCH_NUMBER = "v2021.12"
     }
     stages {
         stage('Patch') {
@@ -18,7 +20,7 @@ _main_func_ () {
     while IFS= read -r line || [ -n "$line" ]; do
     git checkout feature "$line"
     n=$((n+1))
-    done < ./Patch_File_List.txt
+    done < ${WORKSPACE}/Patch_File_List.txt
     git config user.name "${GIT_USER_NAME}"
     git config user.email "${GIT_USER_MAIL}"
     git commit -m "Patch-${PATCH_NUMBER}"
